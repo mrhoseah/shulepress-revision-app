@@ -7,15 +7,15 @@ import {
     deleteRoomController
 } from "~/controllers/room.controller";
 import validateInput, { parseFormData } from "~/middlewares/inputMiddleware";
-import { createRoomSchema, getRoomByIdSchema, updateRoomSchema } from "~/schema/room.schema";
+import { createSchemeOfWorkSchema, getSchemeOfWorkByIdSchema, updateSchemeOfWorkSchema } from "~/schema/schemeofwork.schema";
 import { requireUser } from "~/middlewares/authMiddleware";
 
 const roomRouter = Router();
 
 roomRouter.get("/", getRooms);
-roomRouter.get("/:id", validateInput(getRoomByIdSchema), getRoomByIdController);
-roomRouter.post("/", parseFormData, validateInput(createRoomSchema), requireUser, createRoomController);
-roomRouter.put("/:id", parseFormData, validateInput(updateRoomSchema), requireUser, updateRoomController);
-roomRouter.delete("/destroy/:id", validateInput(getRoomByIdSchema), requireUser, deleteRoomController);
+roomRouter.get("/:id", validateInput(getSchemeOfWorkByIdSchema), getRoomByIdController);
+roomRouter.post("/", parseFormData, validateInput(createSchemeOfWorkSchema), requireUser, createRoomController);
+roomRouter.put("/:id", parseFormData, validateInput(updateSchemeOfWorkSchema), requireUser, updateRoomController);
+roomRouter.delete("/destroy/:id", validateInput(getSchemeOfWorkByIdSchema), requireUser, deleteRoomController);
 
 export default roomRouter;

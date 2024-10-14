@@ -44,7 +44,6 @@ export function CreateSubject({
  title,
    slug,
    levelId,
-
 authorId
 }: Pick<Subject,  "title"| "slug"> & {
   authorId: User["id"],levelId:Level["id"]
@@ -68,7 +67,7 @@ authorId
 }
 export async function updateSubject(
   id: string,
-  data: Partial<Pick<Subject, "title" | "slug">> & { levelId?: Level["id"] }
+  data: Partial<Pick<Subject, "title" | "slug"|"isPublished">> & { levelId?: Level["id"] }
 ) {
   // Create the updateData object without levelId
   const { levelId, ...updateData } = data;

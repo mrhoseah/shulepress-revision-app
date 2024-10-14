@@ -5,9 +5,9 @@ import {
     getOtherDocuments,
     updateOtherDocumentController,
     deleteOtherDocumentController
-} from "~/controllers/othercodument.controller";
+} from "~/controllers/otherdocument.controller";
 import validateInput, { parseFormData } from "~/middlewares/inputMiddleware";
-import { createOtherDocumentSchema, getOtherDocumentByIdSchema, updateOtherDocumentSchema,deleteOtherDocumentSchema } from "~/schema/othercodument.schema";
+import { createOtherDocumentSchema, getOtherDocumentByIdSchema, updateOtherDocumentSchema,deleteOtherDocumentSchema } from "~/schema/otherdocument.schema";
 import { requireUser } from "~/middlewares/authMiddleware";
 
 const otherDocumentRouter = Router();

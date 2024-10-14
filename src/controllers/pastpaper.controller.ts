@@ -1,6 +1,6 @@
 import { Response } from "express";
 import slug from "slug";
-import { listAllPastPapers, getPastPaperById, CreatePastPaper, updatePastPaper, deletePastPaper } from "~/services/pastPaper.service";
+import { listAllPastPapers, getPastPaperById, CreatePastPaper, updatePastPaper, deletePastPaper } from "~/services/pastpaper.service";
 import { UserRequest } from "~/types"; // Import the extended Request interface
 
 // Get all pastPapers
