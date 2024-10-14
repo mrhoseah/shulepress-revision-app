@@ -1,0 +1,287 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id        String @id
+  name      String
+  email     String @unique
+  phone     String @unique
+  subdomain String @unique
+  ownerId   String
+}
+
+model User {
+  id             String          @id
+  email          String          @unique
+  password       String?
+  phone          String?
+  profile_photo  String?
+  referrer       User            @relation(fields: [referrerId], references: [id], name: "user_referrals")
+  posts          Post[]
+  lessonPLans    LessonPlan[]
+  notes          Note[]
+  pastPapers     PastPaper[]
+  revisionBooks  RevisionBook[]
+  schemesofWork  SchemeofWork[]
+  setBooks       SetBook[]
+  otherDocuments OtherDocument[]
+  referrals      User[]          @relation(name: "user_referrals")
+  exams          Exam[]
+  referrerId     String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  subjects       Subject[]
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  title     String
+  content   String?
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Room {
+  id            String         @id @default(uuid())
+  title         String
+  slug          String         @unique
+  exams         Exam[]
+  lessonPlans   LessonPlan[]
+  pastPapers    PastPaper[]
+  revisionBooks RevisionBook[]
+  schemeofWorks SchemeofWork[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  notes         Note[]
+}
+
+model Level {
+  id            String         @id @default(uuid())
+  title         String
+  slug          String         @unique
+  exams         Exam[]
+  lessonPlans   LessonPlan[]
+  pastPapers    PastPaper[]
+  revisionBooks RevisionBook[]
+  schemeofWorks SchemeofWork[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  subjects      Subject[]
+  notes         Note[]
+}
+
+model ExamType {
+  id        String   @id @default(uuid())
+  title     String
+  slug      String   @unique
+  exams     Exam[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Exam {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  slug        String   @unique
+  levelId     String
+  level       Level    @relation(fields: [levelId], references: [id])
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id])
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  exam_type   ExamType @relation(fields: [examTypeId], references: [id])
+  isPublished Boolean? @default(true)
+  file_url    String?
+  subjectId   String
+  examTypeId  String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Subject {
+  id            String         @id @default(uuid())
+  title         String
+  slug          String         @unique
+  Exam          Exam[]
+  isPublished   Boolean?       @default(true)
+  levelId       String
+  level         Level          @relation(fields: [levelId], references: [id])
+  authorId      String
+  author        User           @relation(fields: [authorId], references: [id])
+  lessonPlans   LessonPlan[]
+  notes         Note[]
+  pastPapers    PastPaper[]
+  revisionBooks RevisionBook[]
+  schemeofWorks SchemeofWork[]
+  setBooks      SetBook[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model LessonPlan {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  slug        String   @unique
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  levelId     String
+  level       Level    @relation(fields: [levelId], references: [id])
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id])
+  subjectId   String
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  isPublished Boolean  @default(true)
+  file_url    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PastPaper {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  slug        String   @unique
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  levelId     String
+  level       Level    @relation(fields: [levelId], references: [id])
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id])
+  subjectId   String
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  isPublished Boolean  @default(true)
+  file_url    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SchemeofWork {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  slug        String   @unique
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  levelId     String
+  level       Level    @relation(fields: [levelId], references: [id])
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id])
+  subjectId   String
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  isPublished Boolean  @default(true)
+  file_url    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Note {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  slug        String   @unique
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  subjectId   String
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  levelId     String
+  level       Level    @relation(fields: [levelId], references: [id])
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id])
+  isPublished Boolean  @default(true)
+  file_url    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SetBook {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  slug        String   @unique
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  subjectId   String
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  isPublished Boolean  @default(true)
+  file_url    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model OtherDocument {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  slug        String   @unique
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  isPublished Boolean  @default(true)
+  file_url    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model RevisionBook {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  slug        String   @unique
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
+  levelId     String
+  level       Level    @relation(fields: [levelId], references: [id])
+  roomId      String
+  room        Room     @relation(fields: [roomId], references: [id])
+  subjectId   String
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  isPublished Boolean  @default(true)
+  file_url    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Transaction {
+  transID         String          @id
+  transType       String
+  transTime       String
+  transAmount     String
+  billRefNumber   String
+  invoiceNumber   String
+  msisd           String
+  user_id         String
+  account         String
+  ends_at         String
+  transactionType TransactionType
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model ShareDistribution {
+  id String @id @default(uuid())
+}
+
+enum TransactionType {
+  WITHDRAW
+  DEPOSIT
+}
+
+// CREATE DATABASE revision_app;
+// GRANT ALL PRIVILEGES ON DATABASE revision_app TO dev;

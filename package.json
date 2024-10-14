@@ -1,0 +1,51 @@
+{
+	"name": "revision-app",
+	"version": "1.0.0",
+	"description": "ShulePress,the premier app designed to revolutionize your learning experience. Whether you’re a student, teacher, or lifelong learner,ShulePress  offers a comprehensive library of educational resources tailored to meet your needs",
+	"main": "dist/app.js",
+	"scripts": {
+		"dev": "tsc && node dist/app.js",
+		"lint": "eslint . --ext .ts",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"exams",
+		"test",
+		"papers",
+		"schemes",
+		"of",
+		"work",
+		"set",
+		"books"
+	],
+	"author": "mrhoseah",
+	"license": "ISC",
+	"devDependencies": {
+		"@eslint/js": "^9.12.0",
+		"@types/express": "^4.17.1",
+		"@types/express-formidable": "^1.2.3",
+		"@types/jsonwebtoken": "^9.0.7",
+		"@types/node": "^22.7.5",
+		"@types/slug": "^5.0.9",
+		"eslint": "^9.12.0",
+		"globals": "^15.11.0",
+		"prisma": "^5.20.0",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.6.3",
+		"typescript-eslint": "^8.8.1"
+	},
+	"dependencies": {
+		"@prisma/client": "^5.20.0",
+		"aws-sdk": "^2.1691.0",
+		"axios": "^1.7.7",
+		"casbin": "^5.31.0",
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.5",
+		"express": "^4.17.1",
+		"express-formidable": "^1.2.0",
+		"jsonwebtoken": "^9.0.2",
+		"multer": "^1.4.5-lts.1",
+		"slug": "^9.1.0",
+		"zod": "^3.23.8"
+	}
+}
